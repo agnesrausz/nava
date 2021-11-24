@@ -11,7 +11,8 @@ class AddView extends Migration
         $this->forge->addField([
             'image_id' => [
                 'type' => 'INT',
-                'constraint' => 11
+                'constraint' => 11,
+                'unique' => true
             ],
             'view_count' => [
                 'type' => 'INT',
