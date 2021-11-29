@@ -33,9 +33,9 @@ $routes->setAutoRoute(true);
 // route since we don't have to scan directories.
 $routes->get('images', 'ImageController::index');
 $routes->post('images', 'ImageController::create');
-$routes->get('images/(:id)', 'ImageController::show/$1');
-$routes->put('images/(:id)', 'ImageController::update/$1');
-$routes->delete('images/(:id)', 'ImageController::destroy/$1');
+$routes->get('images/(:num)', 'ImageController::show/$1');
+$routes->put('images/(:num)', 'ImageController::update/$1');
+$routes->delete('images/(:num)', 'ImageController::destroy/$1');
 
 /*
  * --------------------------------------------------------------------
