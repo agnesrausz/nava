@@ -11,13 +11,13 @@ use Exception;
 class ImageController extends BaseController
 {
     /**
-     * Get all Images
+     * Get all images
      */
     public function index()
     {
         $imageModel = new Image();
         $images = $imageModel->findAll();
-        $viewModel = new Image();
+        $viewModel = new View();
         $views = $viewModel->findAll();
 
         try {
@@ -43,7 +43,7 @@ class ImageController extends BaseController
     }
 
     /**
-     * Create a new Image
+     * Create a new image
      */
     public function create()
     {
@@ -102,17 +102,56 @@ class ImageController extends BaseController
         return $this->response->setJSON($responseData);
     }
 
-        /**
-         * Get Images
-         */
-    public function show()
+    /**
+     * Get image with :id
+     */
+    public function show($imageID)
     {
+        $imageModel = new Image();
+        $image = $imageModel->find($imageID);
+        $viewModel = new View();
+        $view = $viewModel->find($imageID);
+
+        try {
+            if (!$image == false) {
+                $data = [
+                    'image' => $image,
+                    'view' => $view
+                ];
+
+                $responseData = [
+                    'message' => 'Image retrieved successfully',
+                    'data' => $data,
+                    'status' => ResponseInterface::HTTP_OK
+                ];
+            }else {
+                $responseData = [
+                    'message' => 'That page can not be found',
+                    'data' => [],
+                    'status' => ResponseInterface::HTTP_NOT_FOUND
+                ];
+            }
+        } catch (Exception $exception) {
+            $responseData = [
+                'message' => 'Failed to retrieve image',
+                'data' => [],
+                'status' => ResponseInterface::HTTP_BAD_REQUEST
+            ];
+        }
+
+        return $this->response->setJSON($responseData);
     }
 
+    /**
+     * Update image with :id
+     */
     public function update()
     {
     }
 
+    /**
+     * Delete image with :id
+     */
     public function destroy()
     {
     }
