@@ -104,6 +104,8 @@ class ImageController extends BaseController
 
     /**
      * Get image with :id
+     * view_count incremented by 1
+     * view_count++
      */
     public function show($imageID)
     {
@@ -113,7 +115,20 @@ class ImageController extends BaseController
         $view = $viewModel->find($imageID);
 
         try {
-            if (!$image == false) {
+            if ($image) {
+                if (!$view) {
+                    $viewModel->insert([
+                        'image_id' => $imageID,
+                        'view_count' => 1
+                    ]);
+                    $view = $viewModel->find($imageID);
+                }
+                $input = [
+                    'image_id' => $imageID,
+                    'view_count' => ($view['view_count'] + 1),
+                ];
+                $viewModel->update($imageID, $input);
+
                 $data = [
                     'image' => $image,
                     'view' => $view
@@ -124,9 +139,9 @@ class ImageController extends BaseController
                     'data' => $data,
                     'status' => ResponseInterface::HTTP_OK
                 ];
-            }else {
+            } else {
                 $responseData = [
-                    'message' => 'That page can not be found',
+                    'message' => 'That page/image can not be found',
                     'data' => [],
                     'status' => ResponseInterface::HTTP_NOT_FOUND
                 ];
@@ -145,14 +160,110 @@ class ImageController extends BaseController
     /**
      * Update image with :id
      */
-    public function update()
+    public function update($imageID)
     {
+        $rules = [
+            'name' => 'required|string',
+            'creator' => 'required|string'
+        ];
+
+        $input = [
+            'name' => $this->request->getVar('name'),
+            'creator' => $this->request->getVar('creator'),
+        ];
+
+        if (!$this->validate($rules)) {
+            $responseData = [
+                'message' => 'Input validation failed',
+                'data' => [],
+                'status' => ResponseInterface::HTTP_BAD_REQUEST
+            ];
+            return $this->response->setJSON($responseData);
+        }
+
+        try {
+            $imageModel = new Image();
+            $imageModel->update($imageID, $input);
+
+            $viewModel = new View();
+
+            $image = $imageModel->find($imageID);
+
+            $view = $viewModel->find($imageID);
+
+            $data = [
+                'image' => $image,
+                'view' => $view
+            ];
+
+            $responseData = [
+                'message' => 'Image retrieved successfully',
+                'data' => $data,
+                'status' => ResponseInterface::HTTP_CREATED
+            ];
+        } catch (Exception $exception) {
+            $responseData = [
+                'message' => 'Failed to retrieve image',
+                'data' => [],
+                'status' => ResponseInterface::HTTP_BAD_REQUEST
+            ];
+        }
+
+        return $this->response->setJSON($responseData);
     }
 
     /**
      * Delete image with :id
      */
-    public function destroy()
+    public function destroy($imageID)
     {
+        $imageModel = new Image();
+        $viewModel = new View();
+        try {
+            $view = $viewModel->find($imageID);
+            $image = $imageModel->find($imageID);
+
+            if (!$image and !$view) {
+                $responseData = [
+                    'message' => 'That page/image can not be found',
+                    'data' => [],
+                    'status' => ResponseInterface::HTTP_NOT_FOUND
+                ];
+            }else {
+
+                $deleteView = $viewModel->delete($imageID);
+                $deleteImage = $imageModel->delete($imageID);
+
+                $view = $viewModel->find($imageID);
+                $image = $imageModel->find($imageID);
+
+                $data = [
+                    'image' => $image,
+                    'view' => $view
+                ];
+                if ($deleteView and $deleteImage) {
+                    $responseData = [
+                        'message' => 'Image deleted successfully',
+                        'data' => $data,
+                        'status' => ResponseInterface::HTTP_NO_CONTENT
+                    ];
+                } else {
+
+                    $responseData = [
+                        'message' => 'Failed to delete image',
+                        'data' => $data,
+                        'status' => ResponseInterface::HTTP_CONFLICT
+                    ];
+                }
+            }
+        } catch (Exception $exception) {
+            $responseData = [
+                'message' => 'Failed to delete image',
+                'data' => [],
+                'status' => ResponseInterface::HTTP_BAD_REQUEST
+            ];
+        }
+
+        return $this->response->setJSON($responseData);
     }
 }
