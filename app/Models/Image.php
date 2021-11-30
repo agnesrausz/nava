@@ -27,7 +27,10 @@ class Image extends Model
     protected $deletedField  = '';
 
     // Validation
-    protected $validationRules      = [];
+    protected $validationRules      = [
+        'name' => 'required|string',
+        'creator' => 'required|string'
+    ];
     protected $validationMessages   = [];
     protected $skipValidation       = false;
     protected $cleanValidationRules = true;
