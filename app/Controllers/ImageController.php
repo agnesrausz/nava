@@ -105,7 +105,6 @@ class ImageController extends BaseController
     /**
      * Get image with :id
      * view_count incremented by 1
-     * view_count++
      */
     public function show($imageID)
     {
@@ -168,8 +167,8 @@ class ImageController extends BaseController
         ];
 
         $input = [
-            'name' => $this->request->getVar('name'),
-            'creator' => $this->request->getVar('creator'),
+            'name' => $this->request->getRawInput()['name'],
+            'creator' => $this->request->getRawInput()['creator'],
         ];
 
         if (!$this->validate($rules)) {
