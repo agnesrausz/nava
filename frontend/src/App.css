@@ -1,0 +1,46 @@
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+thead{
+    background: #dddddd;
+}
+
+td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+tr:nth-child(even) {
+    background: #dddddd;
+}
+
+form{
+    background: #dddddd;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1%;
+}
+
+.formtitle{
+    /*background: #ffffff;*/
+    width: max-content;
+    padding: 4px;
+}
+
+.inputs{
+    display: grid;
+    width: 100%;
+    margin: 1%;
+}
+
+.inputbuttons{
+    display: grid;
+    width: 20%;
+}
+
+button{
+    margin: 4%;
+}
