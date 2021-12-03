@@ -31,11 +31,11 @@ $routes->setAutoRoute(true);
 
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
-$routes->get('images', 'ImageController::index');
-$routes->post('images', 'ImageController::create');
-$routes->get('images/(:num)', 'ImageController::show/$1');
-$routes->put('images/(:num)', 'ImageController::update/$1');
-$routes->delete('images/(:num)', 'ImageController::destroy/$1');
+$routes->get('images', 'ImageController::index', ['filter' => 'cors']);
+$routes->post('images', 'ImageController::create', ['filter' => 'cors']);
+$routes->get('images/(:num)', 'ImageController::show/$1', ['filter' => 'cors']);
+$routes->put('images/(:num)', 'ImageController::update/$1', ['filter' => 'cors']);
+$routes->delete('images/(:num)', 'ImageController::destroy/$1', ['filter' => 'cors']);
 
 /*
  * --------------------------------------------------------------------
