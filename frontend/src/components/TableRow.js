@@ -13,7 +13,8 @@ function TableRow(props) {
 
     const deleteImage = async () => {
         const response = await axios.delete(`http://localhost:8080/images/${id}`);
-        console.log(response)
+        // console.log(response)
+        props.setIsChange(true)
     }
 
     const onPressUpdate = () => {
