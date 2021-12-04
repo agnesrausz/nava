@@ -4,7 +4,6 @@ import TableRow from "./TableRow";
 
 function Table(props) {
     const [images, setImages] = useState([])
-    // const [views, setViews] = useState([])
 
     useEffect(() => {
         fetchImages();
@@ -14,8 +13,7 @@ function Table(props) {
         setImages([])
         const response = await axios.get('http://localhost:8080/images');
         // console.log(response)
-        let images = response.data.data.images;
-        // let views = response.data.data.views;
+        let images = response.data.images;
 
         for (let i = 0; i < images.length; i++) {
             if (images.length !== 0) {
@@ -42,7 +40,7 @@ function Table(props) {
             <tbody>
             {images.map((image) => (
                 <tr key={image.id}>
-                    <TableRow image={image}/>
+                    <TableRow image={image} setIsChange={props.setIsChange} setImage={props.setImage}/>
                 </tr>
             ))}
             </tbody>
