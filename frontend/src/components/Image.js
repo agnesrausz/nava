@@ -24,23 +24,23 @@ function Image(props) {
     return (
         <table>
             <tr>
-                <td>Id</td>
+                <td className='rowtitle'>Id</td>
                 <td>{image.id}</td>
             </tr>
 
             <tr>
-                <td>Name</td>
+                <td className='rowtitle'>Name</td>
                 <td>{image.name}</td>
             </tr>
 
             <tr>
-                <td>Creator</td>
+                <td className='rowtitle'>Creator</td>
                 <td>{image.creator}</td>
             </tr>
 
             <tr>
-                <td>View</td>
-                <td>{view.view_count}</td>
+                <td className='rowtitle'>View</td>
+                <td>{image.view_count}</td>
             </tr>
         </table>
 );
