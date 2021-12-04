@@ -4,7 +4,6 @@ namespace App\Controllers;
 
 use App\Models\Image;
 use App\Models\View;
-use CodeIgniter\HTTP\Response;
 use CodeIgniter\HTTP\ResponseInterface;
 use Exception;
 
@@ -16,25 +15,18 @@ class ImageController extends BaseController
     public function index()
     {
         $imageModel = new Image();
-        $images = $imageModel->findAll();
-        $viewModel = new View();
-        $views = $viewModel->findAll();
+        $images = $imageModel->findAllImageWithView();
 
         try {
-            $data = [
-                'images' => $images,
-                'views' => $views
-            ];
-
             $responseData = [
                 'message' => 'Images retrieved successfully',
-                'data' => $data,
+                'images' => $images,
                 'status' => ResponseInterface::HTTP_OK
             ];
         } catch (Exception $exception) {
             $responseData = [
                 'message' => 'Failed to retrieve images',
-                'data' => [],
+                'images' => [],
                 'status' => ResponseInterface::HTTP_BAD_REQUEST
             ];
         }
@@ -60,7 +52,7 @@ class ImageController extends BaseController
         if (!$this->validate($rules)) {
             $responseData = [
                 'message' => 'Input validation failed',
-                'data' => [],
+                'images' => [],
                 'status' => ResponseInterface::HTTP_BAD_REQUEST
             ];
             return $this->response->setJSON($responseData);
@@ -73,28 +65,22 @@ class ImageController extends BaseController
             $viewModel = new View();
 
             $imageID = $imageModel->getInsertID();
-            $image = $imageModel->find($imageID);
+            $image = $imageModel->findImageWithView($imageID);
 
             $viewModel->insert([
                 'image_id' => $imageID,
                 'view_count' => 0
             ]);
-            $view = $viewModel->find($imageID);
-
-            $data = [
-                'image' => $image,
-                'view' => $view
-            ];
 
             $responseData = [
                 'message' => 'Image retrieved successfully',
-                'data' => $data,
+                'images' => $image,
                 'status' => ResponseInterface::HTTP_CREATED
             ];
         } catch (Exception $exception) {
             $responseData = [
                 'message' => 'Failed to retrieve image',
-                'data' => [],
+                'images' => [],
                 'status' => ResponseInterface::HTTP_BAD_REQUEST
             ];
         }
@@ -109,7 +95,7 @@ class ImageController extends BaseController
     public function show($imageID)
     {
         $imageModel = new Image();
-        $image = $imageModel->find($imageID);
+        $image = $imageModel->findImageWithView($imageID);
         $viewModel = new View();
         $view = $viewModel->find($imageID);
 
@@ -128,27 +114,23 @@ class ImageController extends BaseController
                 ];
                 $viewModel->update($imageID, $input);
 
-                $data = [
-                    'image' => $image,
-                    'view' => $view
-                ];
 
                 $responseData = [
                     'message' => 'Image retrieved successfully',
-                    'data' => $data,
+                    'images' => $image,
                     'status' => ResponseInterface::HTTP_OK
                 ];
             } else {
                 $responseData = [
                     'message' => 'That page/image can not be found',
-                    'data' => [],
+                    'images' => [],
                     'status' => ResponseInterface::HTTP_NOT_FOUND
                 ];
             }
         } catch (Exception $exception) {
             $responseData = [
                 'message' => 'Failed to retrieve image',
-                'data' => [],
+                'images' => [],
                 'status' => ResponseInterface::HTTP_BAD_REQUEST
             ];
         }
@@ -174,7 +156,7 @@ class ImageController extends BaseController
         if (!$this->validate($rules)) {
             $responseData = [
                 'message' => 'Input validation failed',
-                'data' => [],
+                'images' => [],
                 'status' => ResponseInterface::HTTP_BAD_REQUEST
             ];
             return $this->response->setJSON($responseData);
@@ -182,28 +164,29 @@ class ImageController extends BaseController
 
         try {
             $imageModel = new Image();
+
             $imageModel->update($imageID, $input);
 
-            $viewModel = new View();
+            $image = $imageModel->findImageWithView($imageID);
 
-            $image = $imageModel->find($imageID);
-
-            $view = $viewModel->find($imageID);
-
-            $data = [
-                'image' => $image,
-                'view' => $view
-            ];
+            if ($image){
 
             $responseData = [
                 'message' => 'Image retrieved successfully',
-                'data' => $data,
+                'images' => $image,
                 'status' => ResponseInterface::HTTP_CREATED
             ];
+            } else {
+                $responseData = [
+                    'message' => 'That page/image can not be found',
+                    'images' => [],
+                    'status' => ResponseInterface::HTTP_NOT_FOUND
+                ];
+            }
         } catch (Exception $exception) {
             $responseData = [
                 'message' => 'Failed to retrieve image',
-                'data' => [],
+                'images' => [],
                 'status' => ResponseInterface::HTTP_BAD_REQUEST
             ];
         }
@@ -220,12 +203,12 @@ class ImageController extends BaseController
         $viewModel = new View();
         try {
             $view = $viewModel->find($imageID);
-            $image = $imageModel->find($imageID);
+            $image = $imageModel->findImageWithView($imageID);
 
             if (!$image and !$view) {
                 $responseData = [
                     'message' => 'That page/image can not be found',
-                    'data' => [],
+                    'images' => [],
                     'status' => ResponseInterface::HTTP_NOT_FOUND
                 ];
             }else {
@@ -233,24 +216,19 @@ class ImageController extends BaseController
                 $deleteView = $viewModel->delete($imageID);
                 $deleteImage = $imageModel->delete($imageID);
 
-                $view = $viewModel->find($imageID);
-                $image = $imageModel->find($imageID);
+                $image = $imageModel->findImageWithView($imageID);
 
-                $data = [
-                    'image' => $image,
-                    'view' => $view
-                ];
                 if ($deleteView and $deleteImage) {
                     $responseData = [
                         'message' => 'Image deleted successfully',
-                        'data' => $data,
+                        'images' => $image,
                         'status' => ResponseInterface::HTTP_NO_CONTENT
                     ];
                 } else {
 
                     $responseData = [
                         'message' => 'Failed to delete image',
-                        'data' => $data,
+                        'images' => $image,
                         'status' => ResponseInterface::HTTP_CONFLICT
                     ];
                 }
@@ -258,7 +236,7 @@ class ImageController extends BaseController
         } catch (Exception $exception) {
             $responseData = [
                 'message' => 'Failed to delete image',
-                'data' => [],
+                'images' => [],
                 'status' => ResponseInterface::HTTP_BAD_REQUEST
             ];
         }
