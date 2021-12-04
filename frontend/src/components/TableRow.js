@@ -18,8 +18,11 @@ function TableRow(props) {
     }
 
     const onPressUpdate = () => {
-        //set PUT form
-        // fill form
+        props.setImage({
+            id:image.id,
+            name:image.name,
+            creator:image.creator
+        })
     }
 
     return (
