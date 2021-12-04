@@ -4,7 +4,6 @@ import axios from "axios";
 
 function TableRow(props) {
     const image = props.image
-    const view = props.view
     const id = image.id
 
     const onPressDelete = async () => {
@@ -30,7 +29,7 @@ function TableRow(props) {
             <td>{image.id}</td>
             <td>{image.name}</td>
             <td>{image.creator}</td>
-            <td>view.count</td>
+            <td>{image.view_count}</td>
             <td>
                 <button onClick={onPressUpdate}><span className="material-icons">edit</span></button>
             </td>
