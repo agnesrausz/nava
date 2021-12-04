@@ -5,7 +5,6 @@ import {useParams} from "react-router-dom";
 function Image(props) {
     const {id} = useParams()
     const [image, setImage] = useState([])
-    const [view, setView] = useState([])
 
     useEffect(() => {
         fetchImage();
@@ -13,12 +12,9 @@ function Image(props) {
 
     const fetchImage = async () => {
         const response = await axios.get(`http://localhost:8080/images/${id}`);
-        // console.log(response)
-        let image = response.data.data.image;
-        let view = response.data.data.view;
+        console.log(response.data.images[0])
+        let image = response.data.images[0];
         setImage(image)
-        setView(view)
-        // setViews(state => [...state, views[i]])
     }
 
     return (
