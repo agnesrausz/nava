@@ -2,12 +2,12 @@ import React, {useEffect, useState} from 'react';
 import axios from "axios";
 import {useParams} from "react-router-dom";
 
-function Image(props) {
+function Image() {
     const {id} = useParams()
     const [image, setImage] = useState([])
 
     useEffect(() => {
-        fetchImage();
+        fetchImage()
     }, [])
 
     const fetchImage = async () => {
@@ -20,26 +20,26 @@ function Image(props) {
     return (
         <table>
             <tr>
-                <td className='rowtitle'>Id</td>
+                <td className='row-title'>Id</td>
                 <td>{image.id}</td>
             </tr>
 
             <tr>
-                <td className='rowtitle'>Name</td>
+                <td className='row-title'>Name</td>
                 <td>{image.name}</td>
             </tr>
 
             <tr>
-                <td className='rowtitle'>Creator</td>
+                <td className='row-title'>Creator</td>
                 <td>{image.creator}</td>
             </tr>
 
             <tr>
-                <td className='rowtitle'>View</td>
+                <td className='row-title'>View</td>
                 <td>{image.view_count}</td>
             </tr>
         </table>
-);
+    );
 }
 
 export default Image;

@@ -1,5 +1,4 @@
-import React, {useEffect} from 'react';
-import {useNavigate} from "react-router-dom";
+import React from 'react';
 import {useForm} from "react-hook-form";
 import axios from "axios";
 import FormCreate from "./FormCreate";
@@ -7,9 +6,7 @@ import FormUpdate from "./FormUpdate";
 
 function Form(props) {
 
-    const {register, handleSubmit} = useForm();
-    // let {register, handleSubmit} = useForm({defaultValues:{id: 1, name: 'ccc', creator: 'cccccc' }});
-    // const history = useNavigate();
+    const {register, handleSubmit, reset} = useForm();
     const config = {
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
@@ -39,20 +36,19 @@ function Form(props) {
 
     const onPressReset = () => {
         props.setImage();
+        reset();
     }
 
 
     return (
-        // <form onSubmit={handleSubmit(onSubmitCreate)}>
-        //         <FormCreate register={register}/>
-        <form onSubmit={handleSubmit(props.image ? onSubmitUpdate: onSubmitCreate)}>
+        <form onSubmit={handleSubmit(props.image ? onSubmitUpdate : onSubmitCreate)}>
             {props.image ?
                 <FormUpdate register={register} image={props.image}/>
                 :
                 <FormCreate register={register}/>
             }
 
-            <div className='inputbuttons'>
+            <div className='input-buttons'>
                 <button onClick={onPressReset} type='button'>Reset</button>
                 <button type='submit'>Submit</button>
             </div>

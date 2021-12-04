@@ -18,7 +18,6 @@ function Table(props) {
         for (let i = 0; i < images.length; i++) {
             if (images.length !== 0) {
                 setImages(state => [...state, images[i]])
-                // setViews(state => [...state, views[i]])
             }
         }
         props.setIsChange(false)
