@@ -45,4 +45,27 @@ class Image extends Model
     protected $afterFind      = [];
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
+
+    public function findAllImageWithView(){
+        $db = db_connect();
+        $builder = $db
+            ->table('images')
+            ->select('images.*,views.view_count')
+            ->join('views', 'images.id = views.image_id','LEFT')
+            ->get()
+            ->getResult();
+        return $builder;
+    }
+
+    public function findImageWithView($id){
+        $db = db_connect();
+        $builder = $db
+            ->table('images')
+            ->select('images.*,views.view_count')
+            ->join('views', 'images.id = views.image_id','LEFT')
+            ->where('id', $id)
+            ->get()
+            ->getResult();
+        return $builder;
+    }
 }
