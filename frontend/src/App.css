@@ -3,7 +3,7 @@ table {
     width: 100%;
 }
 
-thead{
+thead {
     background: #dddddd;
 }
 
@@ -17,30 +17,34 @@ tr:nth-child(even) {
     background: #dddddd;
 }
 
-form{
+form {
     background: #dddddd;
     display: flex;
     justify-content: space-between;
     margin-bottom: 1%;
 }
 
-.formtitle{
+.formtitle {
     /*background: #ffffff;*/
     width: max-content;
     padding: 4px;
 }
 
-.inputs{
+.inputs {
     display: grid;
     width: 100%;
     margin: 1%;
 }
 
-.inputbuttons{
+.inputbuttons {
     display: grid;
     width: 20%;
 }
 
-button{
+button {
     margin: 4%;
+}
+
+.rowtitle {
+    width: 10%;
 }
