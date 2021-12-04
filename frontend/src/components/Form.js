@@ -2,10 +2,13 @@ import React, {useEffect} from 'react';
 import {useNavigate} from "react-router-dom";
 import {useForm} from "react-hook-form";
 import axios from "axios";
+import FormCreate from "./FormCreate";
+import FormUpdate from "./FormUpdate";
 
 function Form(props) {
 
     const {register, handleSubmit} = useForm();
+    // let {register, handleSubmit} = useForm({defaultValues:{id: 1, name: 'ccc', creator: 'cccccc' }});
     // const history = useNavigate();
     const config = {
         headers: {
@@ -18,11 +21,9 @@ function Form(props) {
         params.append('name', `${data['name']}`);
         params.append('creator', `${data['creator']}`);
 
-        console.log(data)
-        console.log(params)
         let response = await axios.post('http://localhost:8080/images', params, config);
+        // console.log(response)
         props.setIsChange(true)
-        console.log(response)
     }
 
     const onSubmitUpdate = async (data) => {
@@ -30,42 +31,32 @@ function Form(props) {
         params.append('name', `${data['name']}`);
         params.append('creator', `${data['creator']}`);
 
-        console.log(params)
         let response = await axios.put(`http://localhost:8080/images/${data['id']}`, params, config);
-        props.setIsChange(true)
-        console.log(response)
+        props.setIsChange(true);
+        // console.log(response)
+        props.setImage();
     }
 
-    const onPressReset = async () => {
-        //reset form
-        //reset content
+    const onPressReset = () => {
+        props.setImage();
     }
 
 
     return (
-        <form onSubmit={handleSubmit(onSubmitUpdate)}>
-            <div className='inputs'>
-
-                <div className='formtitle'>
-                    <>Update image</>
-                    {/*<>Create new image</>*/}
-                </div>
-                <br/>
-                <input {...register("id")} type="text" name='id'/>
-
-                <label htmlFor='name'>Name</label>
-                <input  {...register('name')} type='text' name='name'/>
-                <br/>
-
-                <label htmlFor='creator'>Creator</label>
-                <input  {...register('creator')} type='text' name='creator'/>
-                <br/>
-            </div>
+        // <form onSubmit={handleSubmit(onSubmitCreate)}>
+        //         <FormCreate register={register}/>
+        <form onSubmit={handleSubmit(props.image ? onSubmitUpdate: onSubmitCreate)}>
+            {props.image ?
+                <FormUpdate register={register} image={props.image}/>
+                :
+                <FormCreate register={register}/>
+            }
 
             <div className='inputbuttons'>
                 <button onClick={onPressReset} type='button'>Reset</button>
                 <button type='submit'>Submit</button>
             </div>
+
         </form>
     );
 }
