@@ -65,7 +65,7 @@ Newest Node version is required.
 cd nava/frontend
 npm install
 ```
-Copy the envExample.js to nava/frontend and rename it to: env.js
+Copy the nava/frontend/src/envExample.js to nava/frontend/src and rename it to: env.js
 And after that we can start the server:
 ```sh
 npm start
