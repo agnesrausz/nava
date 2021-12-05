@@ -41,7 +41,7 @@ cd nava
 mysql -u [username] -p
 CREATE DATABASE database_name;
 USE database_name;
-SOURCE dump.sql
+SOURCE dump.sql;
 ```
 
 Install the dependencies and start the server.
