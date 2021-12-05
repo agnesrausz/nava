@@ -1,8 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import axios from "axios";
-import TableRow from "./TableRow";
+import TableRow from "./table/TableRow";
+import {HOST} from "../../env";
 
 function Table(props) {
+    const host =HOST
     const [images, setImages] = useState([])
 
     useEffect(() => {
@@ -11,8 +13,7 @@ function Table(props) {
 
     const fetchImages = async () => {
         setImages([])
-        const response = await axios.get('http://localhost:8080/images');
-        // console.log(response)
+        const response = await axios.get(`${host}/images`);
         let images = response.data.images;
 
         for (let i = 0; i < images.length; i++) {

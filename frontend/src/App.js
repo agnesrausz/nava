@@ -2,13 +2,11 @@ import './App.css';
 import {
     BrowserRouter,
     Routes,
-    Route,
-    Link,
-    useParams,
-    useRouteMatch
+    Route
 } from 'react-router-dom';
-import Home from "./components/Home";
-import Image from "./components/Image";
+import Home from "./pages/Home";
+import Image from "./pages/Image";
+import Error from "./pages/Error";
 
 function App() {
     return (
@@ -17,6 +15,7 @@ function App() {
                 <Route exact path='/' element={<Home/>} />
                 <Route exact path='/images' element={<Home/>} />
                 <Route exact path='/image/:id' element={<Image/>} />
+                <Route exact path='*' element={<Error/>} />
             </Routes>
         </BrowserRouter>
 
