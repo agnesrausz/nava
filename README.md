@@ -66,7 +66,7 @@ cd nava/frontend
 npm install
 ```
 Copy the nava/frontend/src/envExample.js to nava/frontend/src and rename it to: env.js
-And after that we can start the server:
+After that go back to the frontend root directory and we can start the server:
 ```sh
 npm start
 ```
