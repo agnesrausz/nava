@@ -4,15 +4,16 @@ import axios from "axios";
 import {checkResponse} from "../../../utility/ErrorHandler";
 import {HOST} from "../../../env";
 
+
 function TableRow(props) {
     const host = HOST
     const image = props.image
     const id = image.id
 
-    const onPressDelete = async () => {
-        await deleteImage();
-    }
-
+    /**
+     * Delete images by id
+     * @returns {Promise<void>}
+     */
     const deleteImage = async () => {
         const response = await axios.delete(`${host}/images/${id}`);
         let result = checkResponse(response);
@@ -23,6 +24,10 @@ function TableRow(props) {
         } else {
             alert(`Error: ${result.message}`);
         }
+    }
+
+    const onPressDelete = () => {
+        deleteImage();
     }
 
     const onPressUpdate = () => {

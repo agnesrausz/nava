@@ -5,8 +5,15 @@ import FormButtons from "./FormButtons";
 import {HOST} from "../../../env";
 import {useForm} from "react-hook-form";
 
+
 function FormUpdate(props) {
     const host = HOST
+    const config = {
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        }
+    }
+
     const preloadedValues={
         name: props.image.name,
         creator: props.image.creator
@@ -15,11 +22,6 @@ function FormUpdate(props) {
     const {register, handleSubmit, reset} = useForm({
         defaultValues: preloadedValues
     });
-    const config = {
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
-        }
-    }
 
     const onSubmitUpdate = async (data) => {
         if (data['name'] === props.image.name && data['creator'] === props.image.creator ){
@@ -33,6 +35,7 @@ function FormUpdate(props) {
         let response = await axios.put(`${host}/images/${data['id']}`, params, config);
 
         let result = checkResponse(response);
+
         if (result.status) {
             props.setIsChange(true);
             props.setImage();
@@ -52,7 +55,8 @@ function FormUpdate(props) {
                 <input {...register("id")}
                        type="hidden"
                        name='id'
-                       value={props.image.id}/>
+                       value={props.image.id}
+                />
 
                 <label htmlFor='name'>Name</label>
                 <input  {...register('name')}
@@ -71,9 +75,7 @@ function FormUpdate(props) {
                 <br/>
             </div>
             <FormButtons reset={reset} setImage={props.setImage}/>
-
         </form>
-
     );
 }
 

@@ -4,7 +4,6 @@ import FormUpdate from "./form/FormUpdate";
 
 
 function FormChooser(props) {
-
     return (
         <>
             {props.image ?

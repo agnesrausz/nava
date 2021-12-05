@@ -3,6 +3,7 @@ import axios from "axios";
 import TableRow from "./table/TableRow";
 import {HOST} from "../../env";
 
+
 function Table(props) {
     const host =HOST
     const [images, setImages] = useState([])
@@ -11,6 +12,10 @@ function Table(props) {
         fetchImages();
     }, [props.isChange])
 
+    /**
+     * Get all images
+     * @returns {Promise<void>}
+     */
     const fetchImages = async () => {
         setImages([])
         const response = await axios.get(`${host}/images`);

@@ -5,42 +5,46 @@ import {HOST} from "../env";
 import Error from "./Error";
 import {checkResponse} from "../utility/ErrorHandler";
 
+
 function Image() {
     const host = HOST
     const {id} = useParams()
     const [image, setImage] = useState([])
-    const [isValidId,setIsValidId] = useState(true);
+    const [isValidId, setIsValidId] = useState(true);
 
     const navigate = useNavigate();
-
-    function handleClick() {
-        navigate("/");
-    }
 
     useEffect(() => {
         fetchImage()
     }, [])
 
+    function handleClick() {
+        navigate("/");
+    }
+
+    /**
+     * Get the image data by id
+     * @returns {Promise<void>}
+     */
     const fetchImage = async () => {
         try {
             parseInt(id)
             const response = await axios.get(`${host}/images/${id}`);
             let result = checkResponse(response);
 
-            if(!result.status){
+            if (!result.status) {
                 setIsValidId(false);
             }
 
             let image = response.data.images[0];
             setImage(image);
-        }
-        catch (e){
+        } catch (e) {
             setIsValidId(false);
         }
     }
 
-    if(!isValidId || !image){
-        return(<Error/>);
+    if (!isValidId || !image) {
+        return (<Error/>);
     }
 
     return (

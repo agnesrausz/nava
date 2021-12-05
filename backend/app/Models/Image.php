@@ -57,6 +57,11 @@ class Image extends Model
         return $builder;
     }
 
+    /**
+     * Find image with an according view count by id
+     * @param $id image id
+     * @return array
+     */
     public function findImageWithView($id){
         $db = db_connect();
         $builder = $db

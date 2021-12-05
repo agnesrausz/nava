@@ -5,15 +5,16 @@ import {HOST} from "../../../env";
 import FormButtons from "./FormButtons";
 import {useForm} from "react-hook-form";
 
-function FormCreate(props) {
-    const {register, handleSubmit, reset} = useForm();
-    const host = HOST
 
+function FormCreate(props) {
+    const host = HOST
     const config = {
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
         }
     }
+
+    const {register, handleSubmit, reset} = useForm();
 
     const onSubmitCreate = async data => {
         let params = new URLSearchParams();
@@ -30,7 +31,6 @@ function FormCreate(props) {
         } else {
             alert(`Error: ${result.message}`);
         }
-
     }
 
     return (
@@ -56,7 +56,6 @@ function FormCreate(props) {
                 <br/>
             </div>
             <FormButtons reset={reset} setImage={props.setImage}/>
-
         </form>
     );
 }
