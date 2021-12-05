@@ -22,7 +22,6 @@ NAVA project uses a number of open source projects:
 - [Codeigniter]
 - [React]
 - [Composer]
-- [MariaDB]
 - [MYSQL]
 
 
@@ -38,10 +37,11 @@ Requirements:
 
 Install the MYSQL dump
 ```sh
+cd nava
 mysql -u [username] -p
 CREATE DATABASE database_name;
 USE database_name;
-SOURCE PATH/TO/dump.sql
+SOURCE dump.sql
 ```
 
 Install the dependencies and start the server.
@@ -81,11 +81,6 @@ Nava contains the following routes to provide response:
 | /images/:id | GET | Show | Show image with :id
 | /images/:id | PUT  | Update |  Update image with :id
 | /images/:id | DELETE  | Destroy |  Delete image with :id
-
-## Challenges
-
-To write both the back-end and front-end, switching the mindset was rather challenging and exhausting.
-It was scary at first to think about I have to learn a new framework and understand the concepts in days but since I know Laravel it was not that hard to make it work. 
 
 
 [//]: # (These are reference links used in the body of this note and get stripped out when the markdown processor does its job. There is no need to format nicely because it shouldn't be seen. Thanks SO - http://stackoverflow.com/questions/4823468/store-comments-in-markdown-syntax)
