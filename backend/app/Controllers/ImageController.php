@@ -73,7 +73,7 @@ class ImageController extends BaseController
             ]);
 
             $responseData = [
-                'message' => 'Image retrieved successfully',
+                'message' => 'Image created successfully',
                 'images' => $image,
                 'status' => ResponseInterface::HTTP_CREATED
             ];
@@ -104,7 +104,7 @@ class ImageController extends BaseController
                 if (!$view) {
                     $viewModel->insert([
                         'image_id' => $imageID,
-                        'view_count' => 1
+                        'view_count' => 0
                     ]);
                     $view = $viewModel->find($imageID);
                 }
@@ -114,6 +114,7 @@ class ImageController extends BaseController
                 ];
                 $viewModel->update($imageID, $input);
 
+                $image = $imageModel->findImageWithView($imageID);
 
                 $responseData = [
                     'message' => 'Image retrieved successfully',
@@ -169,13 +170,13 @@ class ImageController extends BaseController
 
             $image = $imageModel->findImageWithView($imageID);
 
-            if ($image){
+            if ($image) {
 
-            $responseData = [
-                'message' => 'Image retrieved successfully',
-                'images' => $image,
-                'status' => ResponseInterface::HTTP_CREATED
-            ];
+                $responseData = [
+                    'message' => 'Image updated successfully',
+                    'images' => $image,
+                    'status' => ResponseInterface::HTTP_CREATED
+                ];
             } else {
                 $responseData = [
                     'message' => 'That page/image can not be found',
@@ -211,7 +212,7 @@ class ImageController extends BaseController
                     'images' => [],
                     'status' => ResponseInterface::HTTP_NOT_FOUND
                 ];
-            }else {
+            } else {
 
                 $deleteView = $viewModel->delete($imageID);
                 $deleteImage = $imageModel->delete($imageID);
