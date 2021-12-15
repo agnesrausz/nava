@@ -37,7 +37,7 @@ function FormUpdate(props) {
         let result = checkResponse(response);
 
         if (result.status) {
-            props.setIsChange(true);
+            props.setIsChange("update" + data['id'] + data['name'] + data['creator'] );
             props.setImage();
             alert(`Success: ${result.message}`);
             reset();

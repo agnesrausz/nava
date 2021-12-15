@@ -26,7 +26,6 @@ function Table(props) {
                 setImages(state => [...state, images[i]])
             }
         }
-        props.setIsChange(false)
     }
 
     return (

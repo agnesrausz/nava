@@ -25,7 +25,7 @@ function FormCreate(props) {
 
         let result = checkResponse(response);
         if (result.status) {
-            props.setIsChange(true);
+            props.setIsChange('create' + response.data.images[0].id);
             reset();
             alert(`Success: ${result.message}`);
         } else {

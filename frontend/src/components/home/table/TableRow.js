@@ -19,7 +19,7 @@ function TableRow(props) {
         let result = checkResponse(response);
 
         if(result.status){
-            props.setIsChange(true);
+            props.setIsChange("delete" + id);
             alert(`Success: ${result.message}`);
         } else {
             alert(`Error: ${result.message}`);
