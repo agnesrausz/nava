@@ -41,7 +41,7 @@ cd nava
 mysql -u [username] -p
 CREATE DATABASE database_name;
 USE database_name;
-SOURCE dump.sql
+SOURCE dump.sql;
 ```
 
 Install the dependencies and start the server.
@@ -65,8 +65,8 @@ Newest Node version is required.
 cd nava/frontend
 npm install
 ```
-Copy the envExample.js to nava/frontend and rename it to: env.js
-And after that we can start the server:
+Copy the nava/frontend/src/envExample.js to nava/frontend/src and rename it to: env.js
+After that go back to the frontend root directory and we can start the server:
 ```sh
 npm start
 ```
